@@ -1,0 +1,13 @@
+name: Bukkit3DModelBuilder
+version: ${project.version}
+main: com.m8u.bukkit3dmodelbuilder.bukkit3dmodelbuilder.Bukkit3DModelBuilder
+api-version: 1.13
+prefix: Bukkit3DModelBuilder
+authors: [m8u]
+
+commands:
+  build3dmodel:
+    description: Build a 3D model from a server /3dmodels directory.
+    usage: "usage: /build3dmodel <str filename> <int dimension> [str material]"
+    permission: <plugin name>.build3dmodel
+    permission-message: You don't have <permission>

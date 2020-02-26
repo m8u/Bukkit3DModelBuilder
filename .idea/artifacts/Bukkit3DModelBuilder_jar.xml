@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Bukkit3DModelBuilder:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Bukkit3DModelBuilder_jar</output-path>
+    <root id="archive" name="Bukkit3DModelBuilder.jar">
+      <element id="module-output" name="Bukkit3DModelBuilder" />
+    </root>
+  </artifact>
+</component>
