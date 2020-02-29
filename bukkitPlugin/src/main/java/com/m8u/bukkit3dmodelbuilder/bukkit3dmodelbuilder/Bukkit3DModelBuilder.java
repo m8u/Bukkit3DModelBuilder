@@ -1,6 +1,5 @@
 package com.m8u.bukkit3dmodelbuilder.bukkit3dmodelbuilder;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -30,7 +29,7 @@ public final class Bukkit3DModelBuilder extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("Hello Bukkitttttttttttttt!");
+        //getLogger().info("Hello Bukkitttttttttttttt!");
     }
 
     @Override
@@ -45,6 +44,7 @@ public final class Bukkit3DModelBuilder extends JavaPlugin {
             int dimension = 16;
             Material material = Material.STONE;
             boolean noMaterialSpecified = false;
+            boolean validArgs = true;
 
             ArrayList<Material> randomMaterials = new ArrayList<Material>();
             for (Material mat : Material.values()) {
@@ -52,8 +52,6 @@ public final class Bukkit3DModelBuilder extends JavaPlugin {
             }
 
             Random randomMachine = new Random();
-
-            boolean validArgs = true;
 
             Map<Character, Material> materialsDict = new HashMap<Character, Material>();
             for (char mapKey = 'a'; mapKey <= 'z'; mapKey++) {
@@ -93,9 +91,9 @@ public final class Bukkit3DModelBuilder extends JavaPlugin {
                             materialsDict.replace(mapKeyToReplace, Material.getMaterial(args[i].toUpperCase()));
                             mapKeyToReplace++;
                         }
-                        for ( Map.Entry<Character, Material> entry : materialsDict.entrySet() ) {
-                            logger.info(entry.getKey()+": "+entry.getValue());
-                        }
+                        //for ( Map.Entry<Character, Material> entry : materialsDict.entrySet() ) {
+                        //    logger.info(entry.getKey()+": "+entry.getValue());
+                        //}
                     } catch (Exception e) {
                         sender.sendMessage("§o§cerror: some of arguments are invalid");
                         validArgs = false;
@@ -131,7 +129,7 @@ public final class Bukkit3DModelBuilder extends JavaPlugin {
                 blockCoordParams = new int[] {1, -1, 2, 0};
             }
 
-            sender.sendMessage(ChatColor.ITALIC+"processing...");
+            sender.sendMessage("§oprocessing...");
 
             ProcessBuilder processBuilder = new ProcessBuilder();
             processBuilder.command("bash", "-c", serverDirectory+"/plugins/Bukkit3DModelBuilder/./voxelize "
