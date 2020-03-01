@@ -9,7 +9,7 @@ You must be logged as a player on a Minecraft server.
 
 Command: *'/build3dmodel \<modelname\> \<dimension\> \[material\], \[material\], ...'*
 
-Example: *'/build3dmodel suzanne.obj 128 STONE'*
+Example: *'/build3dmodel suzanne.obj 128 STONE, GRASS_BLOCK'*
 
 You can specify as much materials as your **.obj** has, in the same order as your modeling software exports. No **.mtl** needed/supported, you supposed to specify minecraft blocks which look similar to your materials by hand.
 
