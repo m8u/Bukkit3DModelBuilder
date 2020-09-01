@@ -1,5 +1,5 @@
-#include <GL/osmesa.h>
-#include <GL/glu.h>   
+#include <GL/gl.h>   
+#include <GL/freeglut.h>
 
 #include <iostream>
 #include <fstream>
@@ -111,7 +111,6 @@ int main(int argc, char** argv) {
             }
         }
         file.close();
-        //for (int i = 0; i < usemtlPositions.size(); i++) cout << usemtlPositions.at(i) << ' ';
     } else { 
         cout << "No such file" << endl;
         return 1;
@@ -201,7 +200,6 @@ int main(int argc, char** argv) {
 
         for (p = 3*pbufferWidth*pbufferHeight-1; p >= 0; p-=3) {
             if (pixels[p-2] > 0) {
-                //cout << (int)round(pixels[p]+pixels[p-1]+pixels[p-2]*10)-1 << ": " << charset[(int)round(pixels[p]+pixels[p-1]+pixels[p-2]*10)-1] << endl;
                 outputVoxels[x + dimension * (y + dimension * z)] = charset[(int)round(pixels[p]+pixels[p-1]+pixels[p-2]*10)-1];
             }
             x++;
@@ -253,8 +251,5 @@ int main(int argc, char** argv) {
         }
     }
 
-    // TODO: fricking make this a native java interface or somthin
-
     return 0;
-
 }
