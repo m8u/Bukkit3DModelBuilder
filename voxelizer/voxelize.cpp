@@ -1,4 +1,4 @@
-#include <GL/osmesa.h>
+#include <GLFW/glfw3.h>
 #include <GL/glu.h>   
 
 #include <iostream>
@@ -39,7 +39,7 @@ bool isInVector(int thatInt, vector<int> thatVector) {
 }
 
 // draws a layer with specified offsets
-void renderLayer(int vX, int vY, int vZ) {
+void renderLayer(int vX, int vY, int vZ, GLFWwindow* window) {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -62,7 +62,8 @@ void renderLayer(int vX, int vY, int vZ) {
     }
     glEnd();
     red = 0; green = 0; blue = 0;
-
+    
+    glfwSwapBuffers(window);
 }
 
 
@@ -72,8 +73,8 @@ int main(int argc, char** argv) {
     // "dimension" is like, the max voxel width of a result
     int dimension; sscanf(argv[2], "%d", &dimension);
 
-    //argv[1] = "/home/m8u/Shlakocode/C++/voxelization/suzanne.obj";
-    //dimension = 16;
+    argv[1] = "/home/m8u/manjaro backup/3dmodels/suzanne.obj";
+    dimension = 32;
 
     // and also this is a resolution value of a render
     pbufferWidth = dimension, pbufferHeight = dimension;
@@ -117,34 +118,20 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // GLFW initialization
+    GLFWwindow* window;
 
-    // creating OSMesa context for headless rendering
-    GLfloat *buffer;
- 
-    /* Create an RGBA-mode context */
-#if OSMESA_MAJOR_VERSION * 100 + OSMESA_MINOR_VERSION >= 305
-    /* specify Z, stencil, accum sizes */
-    OSMesaContext ctx = OSMesaCreateContextExt( GL_RGBA, 16, 0, 0, NULL );
-#else
-    OSMesaContext ctx = OSMesaCreateContext( GL_RGBA, NULL );
-#endif
-    if (!ctx) {
-        printf("OSMesaCreateContext failed!\n");
-        return 0;
+    if (!glfwInit())
+        return -1;
+
+    window = glfwCreateWindow(pbufferWidth, pbufferHeight, "voxelizer", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
     }
- 
-    /* Allocate the image buffer */
-    buffer = (GLfloat *) malloc( pbufferWidth * pbufferHeight * 4 * sizeof(GLfloat));
-    if (!buffer) {
-        printf("Alloc image buffer failed!\n");
-        return 0;
-    }
- 
-    /* Bind the buffer to the context and make it current */
-    if (!OSMesaMakeCurrent( ctx, buffer, GL_FLOAT, pbufferWidth, pbufferHeight )) {
-        printf("OSMesaMakeCurrent failed!\n");
-        return 0;
-    }
+
+    glfwMakeContextCurrent(window);
 
 
     double zOffset;
@@ -160,7 +147,7 @@ int main(int argc, char** argv) {
         glOrtho(-1.0, 1.0, -1.0, 1.0, zOffset+(2.0/(double)dimension), zOffset+2*(2.0/(double)dimension));
         glPushMatrix();
         
-        renderLayer(0, 1, 2); 
+        renderLayer(0, 1, 2, window); 
 
         glReadBuffer(GL_COLOR_ATTACHMENT0);// again dunno if this needed, there was some floatng point problems
         // reading the pixels of rasterized model
@@ -194,7 +181,7 @@ int main(int argc, char** argv) {
         glOrtho(-1.0, 1.0, -1.0, 1.0, zOffset+(2.0/(double)dimension), zOffset+2*(2.0/(double)dimension));
         glPushMatrix();
         
-        renderLayer(2, 1, 0); 
+        renderLayer(2, 1, 0, window); 
 
         glReadBuffer(GL_COLOR_ATTACHMENT0);
         glReadPixels(0, 0, pbufferWidth, pbufferHeight, GL_RGB, GL_FLOAT, &pixels);
@@ -223,7 +210,7 @@ int main(int argc, char** argv) {
         glOrtho(-1.0, 1.0, -1.0, 1.0, zOffset+(2.0/(double)dimension), zOffset+2*(2.0/(double)dimension));
         glPushMatrix();
         
-        renderLayer(0, 2, 1);
+        renderLayer(0, 2, 1, window);
 
         glReadBuffer(GL_COLOR_ATTACHMENT0);
         glReadPixels(0, 0, pbufferWidth, pbufferHeight, GL_RGB, GL_FLOAT, &pixels);
@@ -252,6 +239,9 @@ int main(int argc, char** argv) {
             cout << endl;
         }
     }
+
+
+    //glfwTerminate();
 
     // TODO: fricking make this a native java interface or somthin
 
