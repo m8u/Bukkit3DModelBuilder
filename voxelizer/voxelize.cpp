@@ -73,8 +73,8 @@ int main(int argc, char** argv) {
     // "dimension" is like, the max voxel width of a result
     int dimension; sscanf(argv[2], "%d", &dimension);
 
-    argv[1] = "/home/m8u/manjaro backup/3dmodels/suzanne.obj";
-    dimension = 32;
+    //argv[1] = "/home/m8u/manjaro backup/3dmodels/suzanne.obj";
+    //dimension = 32;
 
     // and also this is a resolution value of a render
     pbufferWidth = dimension, pbufferHeight = dimension;
